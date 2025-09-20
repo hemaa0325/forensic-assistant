@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forensic Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📄</text></svg>">
+</head>
+<body>
+    <div class="background-aurora"></div>
+    <header>
+        <h1>Forensic Assistant</h1>
+        <p class="subtitle">Securely Analyze Digital Evidence Integrity</p>
+    </header>
+
+    <main>
+        <div class="card glass-effect">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="flash {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <form method="post" enctype="multipart/form-data" id="upload-form">
+                <label>Upload Evidence File</label>
+                <div class="upload-area" id="upload-area">
+                    <input type="file" name="evidence" id="file-upload" required hidden>
+                    <div class="upload-label">
+                        <span class="upload-icon">📁</span>
+                        <span>Drag & drop or click to browse</span>
+                    </div>
+                </div>
+                <p id="filename-display"></p>
+                
+                <label for="pdf_password">Create Report Password</label>
+                <input type="password" name="pdf_password" id="pdf_password" placeholder="Enter a strong password" required>
+                
+                <button type="submit" class="button" onclick="showLoader()">Analyze Now</button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 BITBYBIT</p>
+    </footer>
+
+    <div class="loader-overlay" id="loader-overlay">
+        <div class="loader-spinner"></div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/upload.js') }}"></script>
+</body>
+</html>

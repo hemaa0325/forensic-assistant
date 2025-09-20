@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Report - Forensic Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📄</text></svg>">
+</head>
+<body>
+    <div class="background-aurora"></div>
+    <header>
+        <h1>Forensic Assistant</h1>
+        <p class="subtitle">Secure Analysis Summary</p>
+    </header>
+
+    <main>
+        <div class="card glass-effect">
+            <h2>Analysis Complete</h2>
+            <p class="report-for">Report for: <strong>{{ original_filename }}</strong></p>
+
+            <table class="result-table">
+                <tbody>
+                    <tr>
+                        <th>Status</th>
+                        <td class="status-{{ result.status.lower() }}">{{ result.status }}</td>
+                    </tr>
+                    <tr>
+                        <th>Confidence</th>
+                        <td>{{ result.confidence }}%</td>
+                    </tr>
+                    <tr>
+                        <th>Explanation</th>
+                        <td>{{ result.explanation }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            {% if result.data %}
+                <h3 class="details-header">Extracted Details</h3>
+                <table class="result-table">
+                    <tbody>
+                        {% for key, value in result.data.items() %}
+                        <tr>
+                            <th>{{ key }}</th>
+                            <td>{{ value }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+
+            <a href="{{ url_for('download_report', filename=report_filename) }}" class="button">Download Encrypted Report</a>
+            <a href="{{ url_for('upload_file') }}" class="back-link">Analyze Another File</a>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 BITBYBIT</p>
+    </footer>
+</body>
+</html>

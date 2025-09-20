@@ -1,0 +1,14 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Uploads & Reports (sensitive data)
+uploads/
+reports/
+
+# IDE files
+.vscode/
+
+# Ignore downloaded AI model files
+*.pth

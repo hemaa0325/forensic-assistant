@@ -1,0 +1,125 @@
+/* --- 1. GLOBAL & FONT SETUP --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+:root {
+    --bg-color: #101014;
+    --card-bg: rgba(26, 26, 31, 0.7);
+    --text-primary: #e4e4e7;
+    --text-secondary: #a0a0ab;
+    --accent-color: #4f46e5;
+    --accent-hover: #4338ca;
+    --border-color: rgba(228, 228, 231, 0.1);
+    --flash-success-bg: rgba(74, 222, 128, 0.1);
+    --flash-success-text: #a7f3d0;
+    --flash-error-bg: rgba(248, 113, 113, 0.1);
+    --flash-error-text: #fecaca;
+    --status-authentic: #22c55e;
+    --status-suspicious: #f59e0b;
+    --status-error: #ef4444;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    overflow-x: hidden;
+}
+
+/* --- 2. BACKGROUND & ANIMATIONS --- */
+.background-aurora {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+    background:
+        radial-gradient(ellipse at 70% 20%, #4f46e540 0%, #10101400 50%),
+        radial-gradient(ellipse at 30% 80%, #3b82f640 0%, #10101400 50%);
+    animation: aurora 15s infinite alternate;
+}
+@keyframes aurora { from { transform: rotate(0deg) scale(1.2); } to { transform: rotate(15deg) scale(1.5); } }
+
+/* --- 3. HEADER & FOOTER --- */
+header, footer { text-align: center; width: 100%; max-width: 600px; }
+header { margin-bottom: 2rem; animation: fadeIn 1s ease-out; }
+footer { margin-top: 2rem; color: var(--text-secondary); font-size: 0.8rem; }
+header h1 { font-size: 2rem; font-weight: 700; }
+.subtitle { color: var(--text-secondary); font-weight: 500; }
+
+/* --- 4. MAIN CARD & LAYOUT --- */
+main { width: 100%; max-width: 500px; }
+.card {
+    padding: 2rem; border-radius: 12px; border: 1px solid var(--border-color);
+    animation: fadeIn 0.5s ease-out forwards, slideUp 0.7s ease-out forwards;
+}
+.glass-effect {
+    background-color: var(--card-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { transform: translateY(20px); } to { transform: translateY(0); } }
+
+/* --- 5. FORM & UPLOAD AREA --- */
+.card h2 { text-align: center; margin-bottom: 1.5rem; font-weight: 500; }
+form { display: flex; flex-direction: column; gap: 1.2rem; }
+form label { font-size: 0.9rem; color: var(--text-secondary); font-weight: 500; }
+form input[type="password"] {
+    background: rgba(0,0,0,0.2); border: 1px solid var(--border-color); border-radius: 6px;
+    padding: 0.7rem; color: var(--text-primary); font-size: 1rem; transition: all 0.2s ease;
+}
+form input[type="password"]:focus {
+    outline: none; border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.4);
+}
+.upload-area {
+    border: 2px dashed var(--border-color); border-radius: 8px; padding: 2rem;
+    text-align: center; cursor: pointer; transition: all 0.3s ease;
+}
+.upload-area:hover, .upload-area.drag-over {
+    border-color: var(--accent-color); background-color: rgba(79, 70, 229, 0.1);
+}
+.upload-label { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; color: var(--text-secondary); }
+.upload-icon { font-size: 2rem; }
+#filename-display { margin-top: 0.5rem; font-size: 0.8rem; text-align: center; }
+
+/* --- 6. BUTTONS & LINKS --- */
+.button {
+    background-color: var(--accent-color); color: white; font-weight: 500; border: none;
+    border-radius: 6px; padding: 0.8rem 1rem; font-size: 1rem; cursor: pointer;
+    transition: all 0.2s ease; text-align: center; text-decoration: none; display: block;
+}
+.button:hover { background-color: var(--accent-hover); transform: translateY(-2px); }
+.back-link { display: block; text-align: center; margin-top: 1.5rem; color: var(--text-secondary); text-decoration: none; }
+.back-link:hover { color: var(--text-primary); }
+
+/* --- 7. FLASH MESSAGES & LOADER --- */
+.flash-messages { margin-bottom: 1rem; }
+.flash { padding: 0.8rem 1rem; border-radius: 6px; margin-bottom: 0.5rem; font-weight: 500; }
+.flash.error { background-color: var(--flash-error-bg); color: var(--flash-error-text); border: 1px solid rgba(248, 113, 113, 0.2); }
+.flash.success { background-color: var(--flash-success-bg); color: var(--flash-success-text); border: 1px solid rgba(74, 222, 128, 0.2); }
+.loader-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px);
+    display: none; justify-content: center; align-items: center; z-index: 1000;
+}
+.loader-spinner {
+    width: 50px; height: 50px; border: 5px solid var(--border-color);
+    border-top: 5px solid var(--accent-color); border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+/* --- 8. REPORT PAGE STYLES --- */
+.report-for { text-align: center; color: var(--text-secondary); margin-bottom: 1rem; }
+.result-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+.result-table th, .result-table td { padding: 0.8rem; text-align: left; border-bottom: 1px solid var(--border-color); }
+.result-table th { width: 35%; color: var(--text-secondary); font-weight: 500; }
+.status-authentic { color: var(--status-authentic); font-weight: 700; }
+.status-suspicious { color: var(--status-suspicious); font-weight: 700; }
+.status-error { color: var(--status-error); font-weight: 700; }
+.details-header { margin-top: 30px; margin-bottom: 10px; color: var(--text-secondary); border-bottom: 1px solid var(--border-color); padding-bottom: 10px; font-size: 1rem; }
