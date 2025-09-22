@@ -87,6 +87,39 @@ form input[type="password"]:focus {
 .upload-icon { font-size: 2rem; }
 #filename-display { margin-top: 0.5rem; font-size: 0.8rem; text-align: center; }
 
+/* --- SUPPORTED FORMATS SECTION --- */
+.supported-formats {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.supported-formats h4 {
+    margin-bottom: 0.8rem;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.format-categories {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.format-group {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.format-group strong {
+    color: var(--text-primary);
+    margin-right: 0.5rem;
+}
+
 /* --- 6. BUTTONS & LINKS --- */
 .button {
     background-color: var(--accent-color); color: white; font-weight: 500; border: none;

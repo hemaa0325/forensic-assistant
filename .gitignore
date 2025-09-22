@@ -1,14 +1,77 @@
 # Python
-venv/
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
 
-# Uploads & Reports (sensitive data)
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Project specific
 uploads/
 reports/
+*.pdf
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
+*.tiff
+*.webp
+temp/
+tmp/
+logs/
+*.log
 
-# IDE files
-.vscode/
+# Test files
+test_*.py
+*_test.py
+test_image*
+test_document*
 
-# Ignore downloaded AI model files
-*.pth
+# Environment variables
+.env
+config.ini
+
+# Backup files
+*_backup.py
+*_broken.py
