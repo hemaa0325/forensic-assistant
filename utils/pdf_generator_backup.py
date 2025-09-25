@@ -1,4 +1,3 @@
-from PyPDF2 import PdfReader, PdfWriter
 from fpdf import FPDF
 from datetime import datetime
 import os
@@ -106,37 +105,31 @@ def generate_pdf(app, original_filename, result, password):
         explanation = clean_unicode_text(result.get('explanation', 'N/A'))
         pdf.multi_cell(0, 8, explanation)
         
-        # Generate PDF as bytes for encryption
-        try:
-            # For fpdf2, output() returns bytes by default
-            pdf_output = pdf.output()
-            if isinstance(pdf_output, bytes):
-                pdf_bytes = pdf_output
-            elif isinstance(pdf_output, str):
-                pdf_bytes = pdf_output.encode('latin1')
-            else:
-                # Fallback
-                pdf_bytes = bytes(pdf_output)
-        except Exception as e:
-            print(f"[ERROR] PDF output error: {e}")
-            return None
+        # Add more detailed information from the data section
+        if isinstance(data_section, dict):
+            pdf.ln(5)
+            pdf.set_font("helvetica", "B")
+            pdf.cell(0, 8, "Detailed Analysis:", ln=True)
+            pdf.set_font("helvetica")
+            
+            # Add data section details
+            for key, value in data_section.items():
+                if key not in ['prominent_score', 'ultra_prominent_display']:  # Already handled above
+                    clean_key = clean_unicode_text(str(key))
+                    clean_value = clean_unicode_text(str(value))
+                    pdf.cell(0, 6, f"{clean_key}: {clean_value}", ln=True)
         
-        pdf_buffer = io.BytesIO(pdf_bytes)
-
-        reader = PdfReader(pdf_buffer)
-        writer = PdfWriter()
-
-        for page in reader.pages:
-            writer.add_page(page)
-
-        writer.encrypt(user_password=password)
-
-        with open(locked_path, "wb") as f:
-            writer.write(f)
+        # Generate PDF with encryption using fpdf2
+        pdf.set_encryption(owner_password=password, user_password=password)
+        
+        # Save PDF directly
+        pdf.output(locked_path)
         
         print(f"[SUCCESS] Encrypted PDF successfully saved to: {locked_path}")
         return locked_path
 
     except Exception as e:
         print(f"[ERROR] An error occurred during PDF generation/encryption: {e}")
+        import traceback
+        traceback.print_exc()
         return None

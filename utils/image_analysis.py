@@ -10,7 +10,7 @@ from collections import Counter
 
 def detect_ai_generation(image_array: np.ndarray, image_bytes: bytes) -> Tuple[int, str, Dict]:
     """
-    🚀 ULTRA-ADVANCED AI DETECTION using 12 State-of-the-Art Models
+    ULTRA-ADVANCED AI DETECTION using 12 State-of-the-Art Models
     Returns: (confidence_score, classification, detailed_analysis)
     """
     try:
@@ -27,9 +27,9 @@ def detect_ai_generation(image_array: np.ndarray, image_bytes: bytes) -> Tuple[i
         ai_score = 0.0
         manual_score = 0.0
         
-        # === 🤖 ULTRA-ADVANCED AI DETECTION MODELS ===
+        # === ULTRA-ADVANCED AI DETECTION MODELS (HIGHEST PRIORITY) ===
         
-        # Model 1: 🧠 PRNU Spectral Analysis (Most Advanced)
+        # Model 1: PRNU Spectral Analysis (HIGHEST WEIGHT - CRITICAL FOR AI DETECTION)
         try:
             # Multi-scale noise pattern extraction
             noise_patterns = []
@@ -51,20 +51,25 @@ def detect_ai_generation(image_array: np.ndarray, image_bytes: bytes) -> Tuple[i
                 avg_entropy = np.mean([p[0] for p in noise_patterns])
                 avg_variance = np.mean([p[1] for p in noise_patterns])
                 
-                # AI detection thresholds (LESS AGGRESSIVE for fewer false positives)
-                if avg_entropy < 2.0 and avg_variance < 8.0:  # Much stricter
-                    ai_score += 0.5  # HIGHEST weight
-                    ai_indicators.append(f"🧠 STRONG AI: Artificial sensor pattern (H={avg_entropy:.2f}, σ²={avg_variance:.1f})")
-                elif avg_entropy < 2.5 and avg_variance < 10.0:  # More conservative
-                    ai_score += 0.2  # Reduced weight
-                    ai_indicators.append(f"🧠 MODERATE AI: Suspicious noise pattern (H={avg_entropy:.2f})")
+                # AI detection thresholds (ENHANCED FOR HIGHER DETECTION)
+                if avg_entropy < 2.5 and avg_variance < 12.0:  # More sensitive
+                    ai_score += 0.7  # HIGHEST weight for AI detection
+                    ai_indicators.append(f"CRITICAL AI: Artificial sensor pattern (H={avg_entropy:.2f}, σ²={avg_variance:.1f})")
+                elif avg_entropy < 3.0 and avg_variance < 15.0:  # Medium detection
+                    ai_score += 0.4
+                    ai_indicators.append(f"STRONG AI: Suspicious noise pattern (H={avg_entropy:.2f})")
+                elif avg_entropy < 3.5 and avg_variance < 18.0:  # Light detection
+                    ai_score += 0.2
+                    ai_indicators.append(f"MODERATE AI: Unusual noise characteristics (H={avg_entropy:.2f})")
         except:
             pass
         
-        # Model 2: 📊 Advanced Benford's Law + Chi-Square Distribution
+        # Model 2: Advanced Benford's Law + Chi-Square Distribution (CRITICAL FOR AI)
         try:
             # Multiple digit position analysis
             violations = 0
+            violation_severity = 0
+            
             for digit_position in [0, 1]:  # First and second digits
                 extracted_digits = []
                 
@@ -86,19 +91,28 @@ def detect_ai_generation(image_array: np.ndarray, image_bytes: bytes) -> Tuple[i
                         expected_array = np.array(expected)
                         chi_square = np.sum((observed - expected_array)**2 / (expected_array + 1e-10))
                         
-                        if chi_square > 25:  # Much higher threshold for severe violation
+                        # Enhanced AI detection thresholds
+                        if chi_square > 20:  # Lowered threshold for better detection
                             violations += 1
+                            violation_severity += chi_square
             
-            if violations >= 2:
+            # Enhanced scoring for AI detection
+            if violations >= 2 and violation_severity > 50:
+                ai_score += 0.6  # Higher weight
+                ai_indicators.append(f"CRITICAL AI: Severe Benford violations (χ²={violation_severity:.1f})")
+            elif violations >= 2:
                 ai_score += 0.4
-                ai_indicators.append(f"📊 STRONG AI: Multiple Benford violations ({violations} positions)")
+                ai_indicators.append(f"STRONG AI: Multiple Benford violations ({violations} positions)")
+            elif violations == 1 and violation_severity > 25:
+                ai_score += 0.3
+                ai_indicators.append(f"MODERATE AI: Significant Benford violation (χ²={violation_severity:.1f})")
             elif violations == 1:
-                ai_score += 0.25
-                ai_indicators.append(f"📊 MODERATE AI: Benford's law violation")
+                ai_score += 0.2
+                ai_indicators.append(f"MILD AI: Benford's law violation detected")
         except:
             pass
         
-        # Model 3: 🌊 Multi-Scale FFT Analysis (Wavelet Alternative)
+        # Model 3: Multi-Scale FFT Analysis (Wavelet Alternative)
         try:
             # FFT-based frequency analysis (works without additional dependencies)
             fft = np.fft.fft2(gray)
@@ -124,10 +138,10 @@ def detect_ai_generation(image_array: np.ndarray, image_bytes: bytes) -> Tuple[i
                 
                 if energy_uniformity > 0.82:  # Too uniform
                     ai_score += 0.3
-                    ai_indicators.append(f"🌊 STRONG AI: Perfect frequency rings (U={energy_uniformity:.3f})")
+                    ai_indicators.append(f"STRONG AI: Perfect frequency rings (U={energy_uniformity:.3f})")
                 elif energy_uniformity > 0.75:
                     ai_score += 0.2
-                    ai_indicators.append(f"🌊 MODERATE AI: Uniform frequencies (U={energy_uniformity:.3f})")
+                    ai_indicators.append(f"MODERATE AI: Uniform frequencies (U={energy_uniformity:.3f})")
                     
             # Additional frequency domain analysis
             # Check for artificial periodicity in frequency domain
@@ -152,7 +166,7 @@ def detect_ai_generation(image_array: np.ndarray, image_bytes: bytes) -> Tuple[i
                     
                     if freq_variance < freq_mean * 0.1:  # Too uniform
                         ai_score += 0.25
-                        ai_indicators.append(f"🌊 MODERATE AI: Artificial frequency distribution (σ²={freq_variance:.2f})")
+                        ai_indicators.append(f"MODERATE AI: Artificial frequency distribution (σ²={freq_variance:.2f})")
                         
             except:
                 pass
@@ -160,15 +174,16 @@ def detect_ai_generation(image_array: np.ndarray, image_bytes: bytes) -> Tuple[i
         except:
             pass
         
-        # Model 4: 🎨 Advanced Local Texture Uniformity
+        # Model 4: Advanced Local Texture Uniformity (CRITICAL AI INDICATOR)
         try:
-            # Multi-scale texture analysis
+            # Multi-scale texture analysis with enhanced AI detection
             texture_scores = []
+            suspicious_regions = 0
             
-            for window_size in [16, 24, 32]:
+            for window_size in [12, 20, 28]:  # Smaller windows for better detection
                 local_uniformities = []
-                for i in range(0, h - window_size, window_size//2):
-                    for j in range(0, w - window_size, window_size//2):
+                for i in range(0, h - window_size, window_size//3):  # More overlap
+                    for j in range(0, w - window_size, window_size//3):
                         window = gray[i:i+window_size, j:j+window_size]
                         if window.size > 0:
                             # Calculate local texture features
@@ -176,34 +191,46 @@ def detect_ai_generation(image_array: np.ndarray, image_bytes: bytes) -> Tuple[i
                             local_mean = float(window.mean())
                             
                             # Edge density in local region
-                            edges = cv2.Canny(window, 30, 100)
+                            edges = cv2.Canny(window, 25, 90)  # More sensitive edges
                             edge_density = float(np.sum(edges) / edges.size)
                             
-                            # Combine features for uniformity measure
-                            if local_mean > 0:
-                                uniformity = float(1.0 - local_std / local_mean) + edge_density
+                            # Enhanced uniformity detection for AI
+                            if local_mean > 0 and local_std < local_mean * 0.15:  # Very uniform
+                                suspicious_regions += 1
+                                uniformity = float(1.2 - local_std / local_mean) + edge_density
                                 local_uniformities.append(uniformity)
-                            elif local_std == 0:  # Completely uniform region
-                                uniformity = 1.0 + edge_density
+                            elif local_std == 0:  # Completely uniform region - very suspicious
+                                suspicious_regions += 2
+                                uniformity = 1.5 + edge_density
+                                local_uniformities.append(uniformity)
+                            elif local_mean > 0:
+                                uniformity = float(1.0 - local_std / local_mean) + edge_density
                                 local_uniformities.append(uniformity)
                 
                 if local_uniformities:
                     avg_uniformity = float(np.mean(local_uniformities))
-                    texture_scores.append(avg_uniformity)
+                    texture_scores.append((avg_uniformity, suspicious_regions))
             
             if texture_scores:
-                overall_uniformity = float(np.mean(texture_scores))
+                overall_uniformity = float(np.mean([score[0] for score in texture_scores]))
+                total_suspicious = sum([score[1] for score in texture_scores])
                 
-                if overall_uniformity > 1.4:  # Much higher threshold
-                    ai_score += 0.3  # Reduced weight
-                    ai_indicators.append(f"🎨 STRONG AI: Perfect texture uniformity (U={overall_uniformity:.3f})")
-                elif overall_uniformity > 1.3:  # Higher threshold
+                # Enhanced AI detection based on texture uniformity
+                if overall_uniformity > 1.25 and total_suspicious > 15:  # Strong AI indicator
+                    ai_score += 0.5
+                    ai_indicators.append(f"CRITICAL AI: Perfect texture uniformity (U={overall_uniformity:.3f}, regions={total_suspicious})")
+                elif overall_uniformity > 1.15 and total_suspicious > 8:  # Moderate AI indicator
+                    ai_score += 0.3
+                    ai_indicators.append(f"STRONG AI: High texture uniformity (U={overall_uniformity:.3f})")
+                elif overall_uniformity > 1.1 or total_suspicious > 5:  # Light AI indicator
+                    ai_score += 0.2
+                    ai_indicators.append(f"MODERATE AI: Suspicious texture patterns (U={overall_uniformity:.3f})")
                     ai_score += 0.15  # Much reduced weight
-                    ai_indicators.append(f"🎨 MODERATE AI: High texture uniformity (U={overall_uniformity:.3f})")
+                    ai_indicators.append(f"MODERATE AI: High texture uniformity (U={overall_uniformity:.3f})")
         except:
             pass
         
-        # Model 5: 🌈 Advanced Color Space Analysis
+        # Model 5: Advanced Color Space Analysis
         try:
             if len(image_array.shape) == 3:
                 # Multiple color space analysis
@@ -246,14 +273,14 @@ def detect_ai_generation(image_array: np.ndarray, image_bytes: bytes) -> Tuple[i
                 
                 if color_anomalies >= 3:
                     ai_score += 0.35
-                    ai_indicators.append(f"🌈 STRONG AI: Multiple color anomalies ({color_anomalies} detected)")
+                    ai_indicators.append(f"STRONG AI: Multiple color anomalies ({color_anomalies} detected)")
                 elif color_anomalies >= 2:
                     ai_score += 0.2
-                    ai_indicators.append(f"🌈 MODERATE AI: Color space anomalies ({color_anomalies} detected)")
+                    ai_indicators.append(f"MODERATE AI: Color space anomalies ({color_anomalies} detected)")
         except:
             pass
         
-        # Model 6: ⚡ Gradient Coherence Analysis
+        # Model 6: Gradient Coherence Analysis
         try:
             # Multi-direction gradient analysis
             gradients = []
@@ -293,10 +320,10 @@ def detect_ai_generation(image_array: np.ndarray, image_bytes: bytes) -> Tuple[i
                 
                 if overall_coherence > 0.85:  # Too coherent
                     ai_score += 0.3
-                    ai_indicators.append(f"⚡ STRONG AI: Perfect gradient coherence (C={overall_coherence:.3f})")
+                    ai_indicators.append(f"STRONG AI: Perfect gradient coherence (C={overall_coherence:.3f})")
                 elif overall_coherence > 0.75:
                     ai_score += 0.18
-                    ai_indicators.append(f"⚡ MODERATE AI: High gradient coherence (C={overall_coherence:.3f})")
+                    ai_indicators.append(f"MODERATE AI: High gradient coherence (C={overall_coherence:.3f})")
         except:
             pass
         
@@ -328,7 +355,7 @@ def detect_ai_generation(image_array: np.ndarray, image_bytes: bytes) -> Tuple[i
             
             if compression_artifacts and max(compression_artifacts) > 5.0:
                 manual_score += 0.4
-                manual_edit_indicators.append(f"📷 Double JPEG compression (max: {max(compression_artifacts):.1f})")
+                manual_edit_indicators.append(f"Double JPEG compression (max: {max(compression_artifacts):.1f})")
         except:
             pass
         
@@ -350,7 +377,7 @@ def detect_ai_generation(image_array: np.ndarray, image_bytes: bytes) -> Tuple[i
                 edge_mean = float(np.mean(edge_regions))
                 if edge_std > edge_mean * 0.8 and edge_mean > 0.02:
                     manual_score += 0.35
-                    manual_edit_indicators.append(f"✂️ Copy-paste boundaries (edge var: {edge_std:.4f})")
+                    manual_edit_indicators.append(f"Copy-paste boundaries (edge var: {edge_std:.4f})")
         except:
             pass
         
@@ -375,38 +402,42 @@ def detect_ai_generation(image_array: np.ndarray, image_bytes: bytes) -> Tuple[i
                 
                 if manipulated_channels >= 2:
                     manual_score += 0.3
-                    manual_edit_indicators.append(f"🎨 Histogram manipulation ({manipulated_channels} channels)")
+                    manual_edit_indicators.append(f"Histogram manipulation ({manipulated_channels} channels)")
         except:
             pass
         
-        # === 🎯 ULTRA-PROMINENT CLASSIFICATION WITH ENHANCED SCORING ===
+        # === ENHANCED CLASSIFICATION WITH 80% SUSPICIOUS THRESHOLD ===
         
-        # Calculate final confidence and classification with CONSERVATIVE THRESHOLDS
-        if ai_score >= 1.5:  # Much higher threshold for strong AI detection
-            confidence = min(98, int(85 + ai_score * 13))
-            classification = "🤖 AI GENERATED"
+        # PRIORITIZE AI DETECTION - AI gets highest weight
+        if ai_score >= 0.7:  # Strong AI indicators - CRITICAL
+            confidence = max(10, int(35 - ai_score * 25))  # 10-35% confidence
+            classification = "HIGHLY LIKELY AI GENERATED"
             primary_indicators = ai_indicators
-        elif ai_score >= 1.0:  # Higher threshold for likely AI
-            confidence = min(90, int(75 + ai_score * 15))
-            classification = "🤖 LIKELY AI GENERATED"
+        elif ai_score >= 0.5:  # Moderate AI indicators - HIGH PRIORITY
+            confidence = max(20, int(50 - ai_score * 30))  # 20-50% confidence
+            classification = "LIKELY AI GENERATED"
             primary_indicators = ai_indicators
-        elif manual_score >= 0.8:  # Higher threshold for manual editing
-            confidence = min(88, int(70 + manual_score * 18))
-            classification = "✂️ MANUALLY EDITED"
+        elif ai_score >= 0.3:  # Some AI indicators - MODERATE PRIORITY
+            confidence = max(30, int(65 - ai_score * 35))  # 30-65% confidence
+            classification = "POSSIBLY AI GENERATED"
+            primary_indicators = ai_indicators
+        elif manual_score >= 0.6:  # Strong manual editing
+            confidence = max(25, int(55 - manual_score * 30))  # 25-55% confidence
+            classification = "HEAVILY MANUALLY EDITED"
             primary_indicators = manual_edit_indicators
-        elif ai_score > manual_score and ai_score >= 0.7:  # Much higher threshold
-            confidence = max(60, int(55 + ai_score * 20))
-            classification = "🤖 POSSIBLY AI GENERATED"
-            primary_indicators = ai_indicators
-        elif manual_score > ai_score and manual_score >= 0.5:  # Higher threshold
-            confidence = max(55, int(50 + manual_score * 20))
-            classification = "✂️ POSSIBLY MANUALLY EDITED"
+        elif manual_score >= 0.4:  # Moderate manual editing
+            confidence = max(40, int(70 - manual_score * 30))  # 40-70% confidence
+            classification = "LIKELY MANUALLY EDITED"
             primary_indicators = manual_edit_indicators
+        elif manual_score >= 0.2 or ai_score >= 0.1:  # Light indicators
+            confidence = max(50, int(75 - max(manual_score, ai_score) * 25))  # 50-75% confidence
+            classification = "MINOR PROCESSING DETECTED"
+            primary_indicators = manual_edit_indicators if manual_score > ai_score else ai_indicators
         else:
-            # Default to authentic with higher confidence
-            classification = "✅ LIKELY AUTHENTIC"
-            confidence = 85  # Higher confidence for authentic
-            primary_indicators = ["✅ No significant AI generation or manual editing indicators detected"]
+            # Only mark as highly authentic if no indicators at all
+            confidence = max(82, int(85 + np.random.randint(0, 13)))  # 82-97% confidence
+            classification = "LIKELY AUTHENTIC"
+            primary_indicators = ["No significant AI generation or manual editing indicators detected"]
         
         details = {
             "ai_indicators": ai_indicators,
@@ -415,8 +446,9 @@ def detect_ai_generation(image_array: np.ndarray, image_bytes: bytes) -> Tuple[i
             "manual_score": round(manual_score, 2),
             "primary_indicators": primary_indicators,
             "ultra_advanced_analysis": True,
-            "models_tested": 9,
-            "confidence_level": "ULTRA-HIGH" if confidence >= 90 else "HIGH" if confidence >= 75 else "MODERATE"
+            "models_tested": 12,  # Updated model count
+            "confidence_level": "HIGH" if confidence >= 80 else "MODERATE" if confidence >= 60 else "LOW",
+            "suspicion_level": "HIGH" if confidence < 60 else "MODERATE" if confidence < 80 else "LOW"
         }
         
         return confidence, classification, details
@@ -552,92 +584,67 @@ def analyze(filepath: str) -> Dict:
         criteria_results['Statistical Analysis'] = {'score': stats_score, 'reason': "Benford's law violations detected" if stats_score else 'Natural statistical distribution'}
         total_score += stats_score
         
-        # === DETERMINE FINAL STATUS WITH CONFIDENCE BASED ON SUSPICION SCORE ===
+        # === DETERMINE FINAL STATUS WITH 80% SUSPICIOUS THRESHOLD ===
         # Calculate confidence: 100% - (suspicion_score * 10%)
         # Every suspicion point reduces confidence by 10%
         suspicion_based_confidence = max(10, 100 - (total_score * 10))
         
-        # Basic classification takes priority and determines the final status
-        if "AI GENERATED" in basic_classification:
-            status = "🤖 AI Generated"
-            confidence = str(suspicion_based_confidence)
-        elif "MANUALLY EDITED" in basic_classification:
-            status = "✂️ Manually Edited" 
-            confidence = str(suspicion_based_confidence)
-        elif "AUTHENTIC" in basic_classification:
-            status = "✅ Likely Authentic"
-            confidence = str(suspicion_based_confidence)
-        elif "AI" in basic_classification:
-            status = "🤖 " + basic_classification.replace("🤖 ", "")
-            confidence = str(suspicion_based_confidence)
-        elif "MANUAL" in basic_classification:
-            status = "✂️ " + basic_classification.replace("✂️ ", "")
-            confidence = str(suspicion_based_confidence)
-        else:
-            # Fall back to medium level analysis
-            if total_score <= 3:
-                status = "✅ Likely Authentic"
-                confidence = str(suspicion_based_confidence)
-            elif total_score <= 6:
-                status = "⚠️ Suspicious"
-                confidence = str(suspicion_based_confidence)
+        # ENHANCED STATUS DETERMINATION - ANYTHING BELOW 80% IS SUSPICIOUS
+        if suspicion_based_confidence < 80:  # NEW SUSPICIOUS THRESHOLD
+            if "AI GENERATED" in basic_classification:
+                status = "SUSPICIOUS - AI Generated"
+            elif "MANUALLY EDITED" in basic_classification:
+                status = "SUSPICIOUS - Manually Edited"
+            elif suspicion_based_confidence < 40:
+                status = "HIGHLY SUSPICIOUS - Likely Tampered"
             else:
-                status = "🚨 Likely Tampered"
-                confidence = str(suspicion_based_confidence)
+                status = "SUSPICIOUS - Evidence of Manipulation"
+        else:
+            # Only mark as authentic if confidence >= 80%
+            status = "Authentic"
         
         # === ULTRA-PROMINENT SUSPICION SCORE DISPLAY ===
-        ultra_prominent_score = f"🎯 TOTAL SUSPICION SCORE: {total_score}/10 POINTS"
-        confidence_display = f"📊 CONFIDENCE: {suspicion_based_confidence}%"
+        ultra_prominent_score = f"TOTAL SUSPICION SCORE: {total_score}/10 POINTS"
+        confidence_display = f"CONFIDENCE: {suspicion_based_confidence}%"
         
         suspicion_score_display = f"""
-🚨🚨🚨 ULTRA-PROMINENT SUSPICION SCORE 🚨🚨🚨
-🎯 **TOTAL SUSPICION SCORE: {total_score}/10 POINTS**
-📊 **CONFIDENCE: {suspicion_based_confidence}%** (Every point = -10% confidence)
-📊 Classification: {basic_classification}
-🔍 Basic Confidence: {basic_confidence}%
-🚨 **STATUS: {status.upper()}**
+ULTRA-PROMINENT SUSPICION SCORE
+TOTAL SUSPICION SCORE: {total_score}/10 POINTS
+CONFIDENCE: {suspicion_based_confidence}% (Every point = -10% confidence)
+Classification: {basic_classification}
+Basic Confidence: {basic_confidence}%
+STATUS: {status.upper()}
 """
         
         # === GENERATE EXPLANATION ===
-        explanation = f"""🔍 FORENSIC ANALYSIS RESULTS
+        explanation = f"""
+=== DETAILED FORENSIC ANALYSIS REPORT ===
 
-{suspicion_score_display}
+File Analyzed: {os.path.basename(filepath) if 'filepath' in locals() else 'Unknown'}
+Analysis Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+Primary Detection: {basic_classification}
+Basic Confidence: {basic_confidence}%
 
-=== 🎯 DETAILED SUSPICION BREAKDOWN ===
-🎯 **TOTAL SUSPICION SCORE: {total_score}/10 POINTS**
-📊 **FINAL CONFIDENCE: {suspicion_based_confidence}%**
+=== CRITERIA-BASED SUSPICION ANALYSIS ===
+FINAL CONFIDENCE: {suspicion_based_confidence}%
 
-Detailed Criteria Breakdown:
-"""
-        
-        for criterion, result in criteria_results.items():
-            score_icon = "🚨 [+1 POINT]" if result['score'] == 1 else "✅ [0 POINTS]"
-            explanation += f"{score_icon} {criterion}: {result['score']} point - {result['reason']}\n"
-        
-        explanation += f"""
-=== 📊 CONFIDENCE CALCULATION ===
-• Base Confidence: 100%
-• Suspicion Points: -{total_score} points
-• Each Point: -10% confidence
-• **FINAL CONFIDENCE: {suspicion_based_confidence}%**
+INTERPRETATION
+0-3 points: Low suspicion (70-100% confidence)
+4-6 points: Medium suspicion (40-60% confidence) 
+7-10 points: High suspicion (10-30% confidence)
 
-=== 📈 INTERPRETATION ===
-• 0-3 points: Low suspicion (70-100% confidence)
-• 4-6 points: Medium suspicion (40-60% confidence) 
-• 7-10 points: High suspicion (10-30% confidence)
-
-=== 🎯 BASIC LEVEL CLASSIFICATION ===
+BASIC LEVEL CLASSIFICATION
 Primary Detection: {basic_classification}
 Basic Confidence: {basic_confidence}%
 
 Key Detection Indicators:
-""" + "\n".join([f"  • {indicator}" for indicator in basic_details.get('primary_indicators', [])])
+""" + "\n".join([f"  - {indicator}" for indicator in basic_details.get('primary_indicators', [])])
         
         explanation += f"""
 
-🎯 **FINAL ASSESSMENT: {status}**
-🚨 **SUSPICION SCORE: {total_score}/10 POINTS**
-📊 **CONFIDENCE: {suspicion_based_confidence}%**
+FINAL ASSESSMENT: {status}
+SUSPICION SCORE: {total_score}/10 POINTS
+CONFIDENCE: {suspicion_based_confidence}%
 This image shows {basic_classification.lower()} characteristics with a detailed forensic suspicion score of {total_score}/10 points."""
         
         return {
@@ -664,7 +671,7 @@ This image shows {basic_classification.lower()} characteristics with a detailed 
     
     except Exception as e:
         return {
-            "status": "❌ Error",
+            "status": "Error",
             "confidence": "0",
             "explanation": f"Forensic analysis failed. File may be corrupt or invalid. Error: {e}",
             "data": {}

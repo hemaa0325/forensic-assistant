@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports List - Forensic Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>FA</text></svg>">
+    <style>
+        .reports-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .reports-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        
+        .reports-table th,
+        .reports-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e1e8ed;
+        }
+        
+        .reports-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+        }
+        
+        .reports-table tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .download-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .no-reports {
+            text-align: center;
+            padding: 60px 20px;
+            color: #7f8c8d;
+        }
+        
+        .no-reports h3 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .file-size {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .nav-links {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .nav-links a {
+            color: #667eea;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .page-header h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .page-header p {
+            color: #7f8c8d;
+            font-size: 1.1em;
+        }
+        
+        .stats {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .stats h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .stats ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: left;
+            display: inline-block;
+        }
+        
+        .stats li {
+            position: relative;
+            padding-left: 1.2rem;
+            margin: 5px 0;
+        }
+        
+        .stats li:before {
+            content: "•";
+            color: #667eea;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        
+        .stats p {
+            color: #7f8c8d;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-aurora"></div>
+    <header>
+        <h1>Forensic Assistant</h1>
+        <p class="subtitle">Analysis Reports Archive</p>
+    </header>
+
+    <main>
+        <div class="reports-container">
+            <div class="page-header">
+                <h1>Analysis Reports</h1>
+                <p>View and download all forensic analysis reports</p>
+            </div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="flash {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith }
+
+            <div class="stats">
+                <h3>Report Statistics</h3>
+                <ul>
+                    <li><strong>Total Reports:</strong> {{ reports|length }}</li>
+                    {% if reports %}
+                        <li><strong>Latest Report:</strong> {{ reports[0].created }}</li>
+                    {% endif %}
+                </ul>
+            </div>
+
+            {% if reports %}
+                <table class="reports-table">
+                    <thead>
+                        <tr>
+                            <th>Report File</th>
+                            <th>File Size</th>
+                            <th>Created</th>
+                            <th>Modified</th>
+                            <th>Download</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for report in reports %}
+                        <tr>
+                            <td>
+                                <strong>{{ report.filename }}</strong>
+                            </td>
+                            <td>
+                                <span class="file-size">
+                                    {% if report.size < 1024 %}
+                                        {{ report.size }} B
+                                    {% elif report.size < 1024*1024 %}
+                                        {{ "%.1f"|format(report.size/1024) }} KB
+                                    {% else %}
+                                        {{ "%.1f"|format(report.size/(1024*1024)) }} MB
+                                    {% endif %}
+                                </span>
+                            </td>
+                            <td>{{ report.created }}</td>
+                            <td>{{ report.modified }}</td>
+                            <td>
+                                <a href="{{ url_for('download_report', filename=report.filename) }}" 
+                                   class="download-btn">
+                                    Download
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="no-reports">
+                    <h3>No Reports Found</h3>
+                    <p>No forensic analysis reports have been generated yet.</p>
+                    <p>Start by analyzing a file to create your first report!</p>
+                </div>
+            {% endif %}
+
+            <div class="nav-links">
+                <a href="/">← Back to Analysis</a>
+                <a href="/verify">Blockchain Verification</a>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 BITBYBIT | <a href="/verify" style="color: #667eea; text-decoration: none;">Blockchain Verification</a></p>
+    </footer>
+</body>
+</html>

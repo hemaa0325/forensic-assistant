@@ -12,7 +12,7 @@ from collections import Counter
 
 def detect_ai_generation_ultra(image_array: np.ndarray, image_bytes: bytes) -> Tuple[int, str, Dict]:
     """
-    🚀 ULTRA-ADVANCED AI DETECTION using 12 State-of-the-Art Models
+     ULTRA-ADVANCED AI DETECTION using 12 State-of-the-Art Models
     Returns: (confidence_score, classification, detailed_analysis)
     """
     try:
@@ -29,7 +29,7 @@ def detect_ai_generation_ultra(image_array: np.ndarray, image_bytes: bytes) -> T
         ai_score = 0.0
         manual_score = 0.0
         
-        # === 🤖 ULTRA-ADVANCED AI DETECTION MODELS ===
+        # ===  ULTRA-ADVANCED AI DETECTION MODELS ===
         
         # Model 1: 🧠 PRNU Spectral Analysis (Most Advanced)
         try:
@@ -56,10 +56,10 @@ def detect_ai_generation_ultra(image_array: np.ndarray, image_bytes: bytes) -> T
                 # AI detection thresholds (more sensitive)
                 if avg_entropy < 2.8 and avg_variance < 12.0:
                     ai_score += 0.5  # HIGHEST weight
-                    ai_indicators.append(f"🧠 STRONG AI: Artificial sensor pattern (H={avg_entropy:.2f}, σ²={avg_variance:.1f})")
+                    ai_indicators.append(f" STRONG AI: Artificial sensor pattern (H={avg_entropy:.2f}, σ²={avg_variance:.1f})")
                 elif avg_entropy < 3.5 or avg_variance < 18.0:
                     ai_score += 0.3
-                    ai_indicators.append(f"🧠 MODERATE AI: Suspicious noise pattern (H={avg_entropy:.2f})")
+                    ai_indicators.append(f" MODERATE AI: Suspicious noise pattern (H={avg_entropy:.2f})")
         except:
             pass
         
@@ -93,10 +93,10 @@ def detect_ai_generation_ultra(image_array: np.ndarray, image_bytes: bytes) -> T
             
             if violations >= 2:
                 ai_score += 0.4
-                ai_indicators.append(f"📊 STRONG AI: Multiple Benford violations ({violations} positions)")
+                ai_indicators.append(f" STRONG AI: Multiple Benford violations ({violations} positions)")
             elif violations == 1:
                 ai_score += 0.25
-                ai_indicators.append(f"📊 MODERATE AI: Benford's law violation")
+                ai_indicators.append(f" MODERATE AI: Benford's law violation")
         except:
             pass
         
@@ -126,10 +126,10 @@ def detect_ai_generation_ultra(image_array: np.ndarray, image_bytes: bytes) -> T
                 
                 if energy_uniformity > 0.82:  # Too uniform
                     ai_score += 0.3
-                    ai_indicators.append(f"🌊 STRONG AI: Perfect frequency rings (U={energy_uniformity:.3f})")
+                    ai_indicators.append(f" STRONG AI: Perfect frequency rings (U={energy_uniformity:.3f})")
                 elif energy_uniformity > 0.75:
                     ai_score += 0.2
-                    ai_indicators.append(f"🌊 MODERATE AI: Uniform frequencies (U={energy_uniformity:.3f})")
+                    ai_indicators.append(f" MODERATE AI: Uniform frequencies (U={energy_uniformity:.3f})")
                     
             # Enhanced frequency domain analysis for AI detection
             try:
@@ -146,7 +146,7 @@ def detect_ai_generation_ultra(image_array: np.ndarray, image_bytes: bytes) -> T
                     
                     if high_freq_energy < total_energy * 0.1:  # Too little high-frequency content
                         artificial_patterns += 1
-                        ai_indicators.append("🌊 Artificial: Low high-frequency content")
+                        ai_indicators.append(" Artificial: Low high-frequency content")
                 
                 # Check for periodic artifacts (common in AI generation)
                 # Look for regular patterns in frequency domain
@@ -155,7 +155,7 @@ def detect_ai_generation_ultra(image_array: np.ndarray, image_bytes: bytes) -> T
                 
                 if freq_std < freq_mean * 0.3:  # Too uniform frequency distribution
                     artificial_patterns += 1
-                    ai_indicators.append("🌊 Artificial: Uniform frequency distribution")
+                    ai_indicators.append(" Artificial: Uniform frequency distribution")
                 
                 if artificial_patterns >= 2:
                     ai_score += 0.35
@@ -209,10 +209,10 @@ def detect_ai_generation_ultra(image_array: np.ndarray, image_bytes: bytes) -> T
                 
                 if overall_uniformity > 0.88:  # Extremely uniform
                     ai_score += 0.4
-                    ai_indicators.append(f"🎨 STRONG AI: Perfect texture uniformity (U={overall_uniformity:.3f})")
+                    ai_indicators.append(f" STRONG AI: Perfect texture uniformity (U={overall_uniformity:.3f})")
                 elif overall_uniformity > 0.78:
                     ai_score += 0.25
-                    ai_indicators.append(f"🎨 MODERATE AI: High texture uniformity (U={overall_uniformity:.3f})")
+                    ai_indicators.append(f" MODERATE AI: High texture uniformity (U={overall_uniformity:.3f})")
         except:
             pass
         
@@ -256,10 +256,10 @@ def detect_ai_generation_ultra(image_array: np.ndarray, image_bytes: bytes) -> T
                 
                 if color_anomalies >= 3:
                     ai_score += 0.35
-                    ai_indicators.append(f"🌈 STRONG AI: Multiple color anomalies ({color_anomalies} detected)")
+                    ai_indicators.append(f" STRONG AI: Multiple color anomalies ({color_anomalies} detected)")
                 elif color_anomalies >= 2:
                     ai_score += 0.2
-                    ai_indicators.append(f"🌈 MODERATE AI: Color space anomalies ({color_anomalies} detected)")
+                    ai_indicators.append(f" MODERATE AI: Color space anomalies ({color_anomalies} detected)")
         except:
             pass
         
@@ -303,10 +303,10 @@ def detect_ai_generation_ultra(image_array: np.ndarray, image_bytes: bytes) -> T
                 
                 if overall_coherence > 0.85:  # Too coherent
                     ai_score += 0.3
-                    ai_indicators.append(f"⚡ STRONG AI: Perfect gradient coherence (C={overall_coherence:.3f})")
+                    ai_indicators.append(f" STRONG AI: Perfect gradient coherence (C={overall_coherence:.3f})")
                 elif overall_coherence > 0.75:
                     ai_score += 0.18
-                    ai_indicators.append(f"⚡ MODERATE AI: High gradient coherence (C={overall_coherence:.3f})")
+                    ai_indicators.append(f" MODERATE AI: High gradient coherence (C={overall_coherence:.3f})")
         except:
             pass
         
@@ -315,29 +315,29 @@ def detect_ai_generation_ultra(image_array: np.ndarray, image_bytes: bytes) -> T
         # Convert scores to confidence and classification
         if ai_score >= 1.0:  # Strong AI indicators
             confidence = min(98, int(85 + ai_score * 13))
-            classification = "🤖 AI GENERATED"
+            classification = " AI GENERATED"
             primary_indicators = ai_indicators
         elif ai_score >= 0.7:  # Moderate AI indicators  
             confidence = min(90, int(75 + ai_score * 15))
-            classification = "🤖 LIKELY AI GENERATED"
+            classification = " LIKELY AI GENERATED"
             primary_indicators = ai_indicators
         elif manual_score >= 0.6:  # Strong manual editing indicators
             confidence = min(88, int(70 + manual_score * 18))
-            classification = "✂️ MANUALLY EDITED"
+            classification = " MANUALLY EDITED"
             primary_indicators = manual_edit_indicators
         elif ai_score > manual_score and ai_score >= 0.4:
             confidence = max(60, int(55 + ai_score * 20))
-            classification = "🤖 POSSIBLY AI GENERATED"
+            classification = " POSSIBLY AI GENERATED"
             primary_indicators = ai_indicators
         elif manual_score > ai_score and manual_score >= 0.3:
             confidence = max(55, int(50 + manual_score * 20))
-            classification = "✂️ POSSIBLY MANUALLY EDITED"
+            classification = " POSSIBLY MANUALLY EDITED"
             primary_indicators = manual_edit_indicators
         else:
             # No clear indicators
-            classification = "✅ LIKELY AUTHENTIC"
+            classification = " LIKELY AUTHENTIC"
             confidence = 80
-            primary_indicators = ["✅ No significant AI generation or manual editing indicators detected"]
+            primary_indicators = [" No significant AI generation or manual editing indicators detected"]
         
         details = {
             "ai_indicators": ai_indicators,

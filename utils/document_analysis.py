@@ -5,14 +5,6 @@ import pytesseract
 from pdf2image import convert_from_path
 from . import image_forensics_tools
 import numpy as np
-
-import fitz  # PyMuPDF
-import re
-from PIL import Image
-import pytesseract
-from pdf2image import convert_from_path
-from . import image_forensics_tools
-import numpy as np
 from typing import Dict, List, Tuple
 from datetime import datetime
 from collections import Counter
@@ -404,56 +396,63 @@ def analyze(filepath):
         
         # Generate detailed explanation with ultra-prominent suspicion score
         confidence_value = max(10, 100 - (total_score * 10))
-        explanation = f"""🔍 COMPREHENSIVE DOCUMENT FORENSIC ANALYSIS
+        explanation = f"""COMPREHENSIVE DOCUMENT FORENSIC ANALYSIS
 
-🚨🚨🚨 ULTRA-PROMINENT SUSPICION SCORE 🚨🚨🚨
-🎯 **TOTAL SUSPICION SCORE: {total_score}/10 POINTS**
-📊 **CONFIDENCE: {confidence_value}%** (Every point = -10% confidence)
+ULTRA-PROMINENT SUSPICION SCORE
+[TOTAL SUSPICION SCORE: {total_score}/10 POINTS]
+[CONFIDENCE: {confidence_value}%] (Every point = -10% confidence)
 
-=== 🎯 DETAILED SUSPICION BREAKDOWN ===
-🎯 **TOTAL SUSPICION SCORE: {total_score}/10 POINTS**
-📊 **FINAL CONFIDENCE: {confidence_value}%**
+=== DETAILED SUSPICION BREAKDOWN ===
+[TOTAL SUSPICION SCORE: {total_score}/10 POINTS]
+[FINAL CONFIDENCE: {confidence_value}%]
 
 Detailed Criteria Breakdown:
 """
         
         for criterion, result in criteria_results.items():
-            score_icon = "🚨 [+1 POINT]" if result['score'] == 1 else "✅ [0 POINTS]"
+            score_icon = "[+1 POINT]" if result['score'] == 1 else "[0 POINTS]"
             explanation += f"{score_icon} {criterion}: {result['score']} point - {result['reasoning']}\n"
         
         explanation += f"""
-=== 📊 CONFIDENCE CALCULATION ===
+=== CONFIDENCE CALCULATION ===
 • Base Confidence: 100%
 • Suspicion Points: -{total_score} points
 • Each Point: -10% confidence
-• **FINAL CONFIDENCE: {confidence_value}%**
+• [FINAL CONFIDENCE: {confidence_value}%]
 
-=== 📈 INTERPRETATION ===
+=== INTERPRETATION ===
 • 0-3 points: Low suspicion (70-100% confidence)
 • 4-6 points: Medium suspicion (40-60% confidence)  
 • 7-10 points: High likelihood of forgery/tampering (10-30% confidence)
 
-🎯 **FINAL ASSESSMENT:**"""
+[FINAL ASSESSMENT]:"""
         
-        # Determine final status with confidence based on suspicion score
+        # === DETERMINE FINAL STATUS WITH 80% SUSPICIOUS THRESHOLD ===
         # Every suspicion point reduces confidence by 10%
+        confidence_value = max(10, 100 - (total_score * 10))
         confidence = str(confidence_value)
         
-        if total_score <= 3:
-            status = "✅ Likely Authentic"
-            explanation += f" Document appears authentic with low suspicion score ({total_score}/10 points)."
-        elif total_score <= 6:
-            status = "⚠️ Suspicious"
-            explanation += f" Document shows medium suspicion indicators ({total_score}/10 points). Manual review recommended."
+        # ENHANCED STATUS DETERMINATION - ANYTHING BELOW 80% IS SUSPICIOUS
+        if confidence_value < 80:  # NEW SUSPICIOUS THRESHOLD
+            if total_score >= 7:
+                status = "HIGHLY SUSPICIOUS - Likely Tampered"
+                explanation += f" Document shows CRITICAL tampering indicators ({total_score}/10 points). HIGH RISK of forgery."
+            elif total_score >= 4:
+                status = "SUSPICIOUS - Evidence of Manipulation"
+                explanation += f" Document shows SIGNIFICANT manipulation indicators ({total_score}/10 points). MEDIUM RISK - Manual review required."
+            else:
+                status = "SUSPICIOUS - Minor Indicators"
+                explanation += f" Document shows MINOR suspicious indicators ({total_score}/10 points). LOW-MEDIUM RISK - Review recommended."
         else:
-            status = "🚨 Likely Tampered"
-            explanation += f" Document shows high likelihood of forgery/tampering ({total_score}/10 points)."
+            # Only mark as authentic if confidence >= 80%
+            status = "Authentic"
+            explanation += f" Document appears authentic with minimal suspicious indicators ({total_score}/10 points). LOW RISK."
         
         explanation += f"""
 
-🎯 **FINAL DOCUMENT ASSESSMENT: {status}**
-🚨 **SUSPICION SCORE: {total_score}/10 POINTS**
-📊 **CONFIDENCE: {confidence_value}%**
+[FINAL DOCUMENT ASSESSMENT: {status}]
+[SUSPICION SCORE: {total_score}/10 POINTS]
+[CONFIDENCE: {confidence_value}%]
 This document shows a detailed forensic suspicion score of {total_score}/10 points."""
         
         return {
@@ -474,7 +473,7 @@ This document shows a detailed forensic suspicion score of {total_score}/10 poin
         
     except Exception as e:
         return {
-            "status": "❌ Error",
+            "status": "Error",
             "confidence": "0",
             "explanation": f"Document analysis failed. File may be corrupt or invalid. Error: {e}",
             "data": {}

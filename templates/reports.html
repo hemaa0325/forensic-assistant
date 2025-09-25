@@ -5,7 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analysis Report - Forensic Assistant</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📄</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>FA</text></svg>">
+    <style>
+        .report-details-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .report-details-list li {
+            position: relative;
+            padding-left: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .report-details-list li:before {
+            content: "•";
+            color: var(--accent-color);
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        
+        .report-section {
+            margin: 1.5rem 0;
+        }
+        
+        .report-section h3 {
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+    </style>
 </head>
 <body>
     <div class="background-aurora"></div>
@@ -19,44 +50,70 @@
             <h2>Analysis Complete</h2>
             <p class="report-for">Report for: <strong>{{ original_filename }}</strong></p>
 
-            <table class="result-table">
-                <tbody>
-                    <tr>
-                        <th>Status</th>
-                        <td class="status-{{ result.status.lower() }}">{{ result.status }}</td>
-                    </tr>
-                    <tr>
-                        <th>Confidence</th>
-                        <td>{{ result.confidence }}%</td>
-                    </tr>
-                    <tr>
-                        <th>Explanation</th>
-                        <td>{{ result.explanation }}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="report-section">
+                <h3>Analysis Summary</h3>
+                <ul class="report-details-list">
+                    <li><strong>Status:</strong> <span class="status-{{ result.status.lower() }}">{{ result.status }}</span></li>
+                    <li><strong>Confidence:</strong> {{ result.confidence }}%</li>
+                    <li><strong>Explanation:</strong> {{ result.explanation }}</li>
+                </ul>
+            </div>
 
             {% if result.data %}
-                <h3 class="details-header">Extracted Details</h3>
-                <table class="result-table">
-                    <tbody>
+                <div class="report-section">
+                    <h3>Extracted Details</h3>
+                    <ul class="report-details-list">
                         {% for key, value in result.data.items() %}
-                        <tr>
-                            <th>{{ key }}</th>
-                            <td>{{ value }}</td>
-                        </tr>
+                        <li><strong>{{ key }}:</strong> {{ value }}</li>
                         {% endfor %}
-                    </tbody>
-                </table>
+                    </ul>
+                </div>
+            {% endif %}
+
+            {% if result.blockchain_verified and result.blockchain_record %}
+                <div class="report-section">
+                    <h3>Blockchain Verification</h3>
+                    <ul class="report-details-list">
+                        <li><strong>Status:</strong> <span style="color: #28a745; font-weight: bold;">VERIFIED ON BLOCKCHAIN</span></li>
+                        <li><strong>Record ID:</strong> {{ result.blockchain_record.record_id }}</li>
+                        <li><strong>File Hash:</strong> {{ result.blockchain_record.file_hash }}</li>
+                        <li><strong>Transaction Hash:</strong> {{ result.blockchain_record.transaction_hash }}</li>
+                        <li><strong>Block Number:</strong> {{ result.blockchain_record.block_number }}</li>
+                        <li><strong>Verification:</strong> <a href="https://mumbai.polygonscan.com/tx/{{ result.blockchain_record.transaction_hash }}" target="_blank" style="color: #667eea;">View on Blockchain Explorer</a></li>
+                    </ul>
+                    <p style="font-size: 0.9em; color: #666; margin-top: 10px;">This analysis is permanently recorded on Polygon blockchain and cannot be tampered with or altered.</p>
+                </div>
+            {% elif result.blockchain_status and result.blockchain_status.available and result.blockchain_status.configured %}
+                <div class="report-section">
+                    <h3>Blockchain Verification</h3>
+                    <ul class="report-details-list">
+                        <li><strong>Status:</strong> <span style="color: #ffc107; font-weight: bold;">BLOCKCHAIN READY</span></li>
+                        <li><strong>Note:</strong> Blockchain system is properly configured</li>
+                        <li><strong>Storage Status:</strong> Not stored due to {{ result.blockchain_status.reason }}</li>
+                        <li><strong>Network:</strong> Polygon Amoy Testnet</li>
+                    </ul>
+                    <p style="font-size: 0.9em; color: #666; margin-top: 10px;">Note: Add funds to your wallet to enable permanent blockchain storage for tamper-proof verification.</p>
+                </div>
+            {% else %}
+                <div class="report-section">
+                    <h3>Blockchain Verification</h3>
+                    <ul class="report-details-list">
+                        <li><strong>Status:</strong> <span style="color: #ffc107; font-weight: bold;">LOCAL STORAGE ONLY</span></li>
+                        <li><strong>Note:</strong> Analysis not recorded on blockchain</li>
+                        <li><strong>Reason:</strong> Results stored locally and may be modified</li>
+                    </ul>
+                    <p style="font-size: 0.9em; color: #666; margin-top: 10px;">Note: Analysis results remain fully valid and accurate. Blockchain provides additional tamper-proof verification.</p>
+                </div>
             {% endif %}
 
             <a href="{{ url_for('download_report', filename=report_filename) }}" class="button">Download Encrypted Report</a>
             <a href="{{ url_for('upload_file') }}" class="back-link">Analyze Another File</a>
+            <a href="/verify" class="back-link" style="margin-left: 20px; color: #667eea;">Verify on Blockchain</a>
         </div>
     </main>
     
     <footer>
-        <p>&copy; 2025 BITBYBIT</p>
+        <p>&copy; 2025 BITBYBIT | <a href="/verify" style="color: #667eea; text-decoration: none;">Blockchain Verification</a></p>
     </footer>
 </body>
 </html>
